@@ -1,4 +1,6 @@
-kita akan menggunakan model sederhana dari `transformers` library yang bisa dipecah menjadi beberapa bagian. Misalnya, kita gunakan model GPT-2 dengan dua container: satu container untuk preprocessing dan pengambilan input, dan container kedua untuk bagian inferensinya.
+# Distributed Training using Model Parallelism
+
+Hands on ini menggunakan model sederhana dari `transformers` library yakni model GPT-2 yang bisa dipecah menjadi beberapa bagian dengan dua container, satu container untuk preprocessing dan pengambilan input, dan container kedua untuk bagian inferensinya.
 
 ### Step 1: Persiapan Dockerfile untuk Bagian Pertama (Preprocessing dan Input)
 
@@ -64,7 +66,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001)
 ```
 
-### Step 2: Dockerfile untuk Bagian Kedua (Inferensi Model)
+### Step 2. Dockerfile untuk Bagian Kedua (Inferensi Model)
 
 Di folder yang sama, buat `Dockerfile_part2` untuk bagian inferensi model.
 
@@ -109,7 +111,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002)
 ```
 
-### Step 3: Build Docker Images
+### Step 3. Build Docker Images
 
 Setelah membuat `Dockerfile_part1` dan `Dockerfile_part2`, sekarang kita perlu membuild image Docker.
 
@@ -125,7 +127,7 @@ Setelah membuat `Dockerfile_part1` dan `Dockerfile_part2`, sekarang kita perlu m
    docker build -t your_docker_image_part_2 -f Dockerfile_part2 .
    ```
 
-### Step 4: Buat File YAML untuk Deployment Model Parallelism
+### Step 4. Buat File YAML untuk Deployment Model Parallelism
 
    Kita akan mendefinisikan beberapa container yang menjalankan bagian berbeda dari model. Berikut adalah contoh file YAML sederhana untuk deployment menggunakan Kubernetes dengan model yang dipisah dalam 2 container paralel. Simpan sebagai `model-parallelism.yaml`.
 
@@ -158,7 +160,7 @@ Setelah membuat `Dockerfile_part1` dan `Dockerfile_part2`, sekarang kita perlu m
    - **model-part-1** dan **model-part-2** adalah dua container berbeda, masing-masing menjalankan bagian berbeda dari model.
    - **containerPort** mengizinkan komunikasi di antara bagian-bagian model.
 
-3. **Deploy Model Parallelism**
+###  Step 5. Deploy Model Parallelism
 
    Setelah file YAML disiapkan, jalankan perintah berikut untuk melakukan deploy:
 
@@ -166,7 +168,7 @@ Setelah membuat `Dockerfile_part1` dan `Dockerfile_part2`, sekarang kita perlu m
    kubectl apply -f model-parallelism.yaml
    ```
 
-4. **Mengecek Status Deployment**
+### Step 6. Mengecek Status Deployment
 
    Gunakan perintah berikut untuk memastikan deployment berjalan:
 
@@ -176,7 +178,7 @@ Setelah membuat `Dockerfile_part1` dan `Dockerfile_part2`, sekarang kita perlu m
 
    Jika berhasil, kamu akan melihat Pod yang sesuai dengan nama `model-parallel-deployment`.
 
-5. **Mengakses Hasil Generate Text**
+### Step 7. Mengakses Hasil Generate Text
 
    Gunakan `kubectl port-forward` untuk mengakses salah satu container dan menjalankan permintaan generate teks.
 
