@@ -1,4 +1,4 @@
-# Distributed Training using Model Parallelism
+# Distributed Training using Model Parallelism in Kubernetes Cluster
 
 Hands on ini menggunakan model sederhana dari `transformers` library yakni model GPT-2 yang bisa dipecah menjadi beberapa bagian dengan dua container, satu container untuk preprocessing dan pengambilan input, dan container kedua untuk bagian inferensinya.
 
