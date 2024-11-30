@@ -30,3 +30,9 @@ class GenerateRequest(BaseModel):
 def generate_text(request: GenerateRequest):
     result = generator(request.processed_data, max_length=50, num_return_sequences=1)
     return {"generated_text": result[0]['generated_text']}
+
+
+
+@app.get("/")
+def read_root():
+    return {"Hello": "Fastapi test model in container"}
