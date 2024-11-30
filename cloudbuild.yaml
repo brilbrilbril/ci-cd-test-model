@@ -1,11 +1,11 @@
 options:
   logging: CLOUD_LOGGING_ONLY
 steps:
-  #build image
+  #build google image prebuild
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/ci-cd-practice-cloud/test-model-app:latest', '.']
 
-  #deploy
+  #deploy 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/ci-cd-practice-cloud/test-model-app:latest']
 
