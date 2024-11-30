@@ -1,0 +1,18 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+steps:
+  #build image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/ci-cd-practice-cloud/test-model-app:latest', '.']
+
+  #deploy
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/ci-cd-practice-cloud/test-model-app:latest']
+
+  #push deploy to cloud run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'test-model-deploy', '--image', 'gcr.io/ci-cd-practice-cloud/test-model-app:latest', '--region', 'us-central1', '--platform', 'managed', --allow-unauthenticated]
+
+images:
+  - 'gcr.io/ci-cd-practice-cloud/test-model-app:latest'
